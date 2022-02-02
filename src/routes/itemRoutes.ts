@@ -11,9 +11,11 @@ itemRoutes.get("/cart-items", async (req, res) => {
     let prefix: string = req.query.prefix as string;
     let maxPrice: number = Number(req.query.maxPrice as string);
     let pageSize: number = Number(req.query.pageSize as string) || 0;
+    let product: string = req.query.product as string;
     let query: object = {};
     if (prefix) query = { product: { $regex: "^" + prefix, $options: "i" } };
     if (maxPrice) query = { price: { $lte: maxPrice } };
+    if (product) query = { product: product };
     if (prefix && maxPrice)
       query = {
         product: { $regex: "^" + prefix, $options: "i" },
